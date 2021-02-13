@@ -17,8 +17,8 @@ export default function LogIn() {
                 <Form.Group controlId="formBasicPassword">
                     <Form.Control type="password" placeholder="Password" className='col-8 mx-auto' />
                 </Form.Group>
-                    <Button className='btn col-5 mx-auto mt-4 mb-2' href='/dashboard' style={{ backgroundColor: '#44bd32' }}><b>Log In</b></Button>
-                    <Button className='btn col-5 mx-auto mb-5 mt-2' href='/signup' style={{ backgroundColor: '#44bd32' }}><b>Sign Up</b></Button>
+                    <Button className='btn col-5 mx-auto mt-4 mb-2' href='/dashboard' style={{ backgroundColor: '#44bd32', border: '2px solid #44bd32' }}><b>Log In</b></Button>
+                    <Button className='btn col-5 mx-auto mb-5 mt-2' href='/signup' style={{ backgroundColor: '#44bd32', border: '2px solid #44bd32' }}><b>Sign Up</b></Button>
             </Card>
         </section>
     )
