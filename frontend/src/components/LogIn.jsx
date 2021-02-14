@@ -9,7 +9,7 @@ export default function LogIn() {
         <section className='mx-auto col-4'>
             <Card style={{ backgroundColor: '#d1d8e0' }}>
                 <Card.Header className='py-3 mb-5 text-center' style={{ backgroundColor: '#a5b1c2' }}>
-                    <h5><b>Log In</b></h5>
+                    <h5><b>Sign In</b></h5>
                 </Card.Header>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Control type="email" placeholder="Enter email" className='col-8 mx-auto' />
