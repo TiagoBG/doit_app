@@ -10,6 +10,13 @@ db.users.insert(
 //SHOW USERS
 db.users.find().pretty()
 
+
+//DELETE USER
+db.users.remove(
+    {name:"Carlos"},
+    {justOne:true}    
+);
+
 //LOG IN
 
 
