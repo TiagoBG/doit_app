@@ -1,27 +1,81 @@
 const {Router} = require('express');
+const { ObjectId } = require('mongodb');
 const router = Router();
 const connection = require('../config/db');
 
+const User = require('../models/User');
+const Task = require('../models/Task');
+
+
+// MONGOOSE CRUD    
+
+//USERS
 router.get('/', async(req, res)=>{
-    const db = await connection();
-    db.collection('users').find()
-    .toArray(function(error, users){
-        res.json(users);
-    })    
+    const users = await User.find().sort('_id');
+    res.json(users);
 });
 
 router.post('/', async(req, res)=>{
-    const db = await connection();
     const {name, surname, email, password} = req.body;
+    const newUser = new User({name, surname, email, password});
 
-    db.collection('users').insertOne({
-        name, 
-        surname, 
-        email, 
-        password
-    }, function(err, info){
-        res.json(info.ops[0]);
-    });
+    newUser.save();
+    res.json({'message': 'New user has been added!'})
+});
+
+router.put('/:id', async(req, res)=>{
+    const {name, surname, email, password} = req.body;
+    const id = req.params.id;
+
+    User.findByIdAndUpdate(id, {
+        $set: req.body
+    }, (err, result)=>{
+        if(err){
+            console.error(err)
+        }
+        res.json({'message': result})
+    })
+});
+
+router.delete('/:id', async(req,res)=>{
+    const id = req.params.id;
+    const user = await User.findByIdAndDelete(id);
+    res.json({'message': 'The user has been deleted'})
+});
+
+
+//TASKS
+router.get('/dashboard', async(req, res)=>{
+    const tasks = await Task.find().sort('_id');
+    res.json(tasks);
+});
+
+router.post('/dashboard', async(req, res)=>{
+    const {name, email, priority, image, expdate} = req.body;
+    const newTask= new Task({name, email, priority, image, expdate});
+
+    newTask.save();
+    res.json({'message': 'New task has been added!'})
+});
+
+router.put('/dashboard/:id', async(req, res)=>{
+    const {name, email, priority, image, expdate} = req.body;
+    const id = req.params.id;
+
+    Task.findByIdAndUpdate(id, {
+        $set: req.body
+    }, (err, result)=>{
+        if(err){
+            console.error(err)
+        }
+        res.json({'message': result})
+    })
+});
+
+router.delete('/dashboard/:id', async(req,res)=>{
+    const id = req.params.id;
+    const task = await Task.findByIdAndDelete(id);
+    res.json({'message': 'The task has been deleted'})
 });
 
 module.exports = router;
