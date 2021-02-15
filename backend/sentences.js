@@ -54,3 +54,5 @@ db.tasks.remove(
     {priority:"High"},
     {justOne:true}    
 );
+
+db.tasks.remove({_id:ObjectId("602ae49fe79d7909e899f885")});

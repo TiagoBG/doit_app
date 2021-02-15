@@ -70,9 +70,24 @@ router.get('/dashboard/:id', async(req, res)=>{
     res.json(tasks);
 });
 
+router.post('/dashboard/:id', async(req, res)=>{
+    const id = req.params.id
+    const {taskname, urlimage, priority, expdate, user} = req.body;
+       const task = await Task.findOneAndUpdate(
+        {_id:ObjectId(id)},
+        {taskname: taskname,
+        urlimage: urlimage,
+        priority: priority,
+        expdate:expdate,
+        user: user
+    }
+    );
+    res.json(task);
+});
+
 router.post('/dashboard', async(req, res)=>{
-    const {taskname, urlimage, priority, image, expdate, user} = req.body;
-    const newTask= new Task({taskname, urlimage, priority, image, expdate, user});
+    const {taskname, urlimage, priority, expdate, user} = req.body;
+    const newTask= new Task({taskname, urlimage, priority, expdate, user});
 
     newTask.save();
     res.json({'message': 'New task has been added!'})
