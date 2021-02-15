@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -13,6 +13,13 @@ export default function NewTask() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const id = getFromLocal("id");
+    let todo;
+
+    useEffect(() => {
+        showTasks();
+    },[]);
 
     function insertTask(e) {
         let name = e.target.id;
@@ -49,10 +56,10 @@ export default function NewTask() {
                     confirmButtonText: "Got It!",
                     confirmButtonColor: "#54e346"
                   });
-                  clearFields();                                      
+                  clearFields();
+                  showTasks();                                      
               }
-        });
-        
+        });        
     }
     
     const clearFields = () => {
@@ -65,8 +72,19 @@ export default function NewTask() {
     
         for (const input of userInputs) {
           input.value = ''
-        }
-    
+        }    
+    }
+
+    const showTasks = ()=>{
+        if (id) {
+            api.get(`/dashboard/${id}`).then(
+                (res)=> {
+                    todo = res.data;
+                    console.log(todo);
+                    setTaskData(todo);
+                }
+            )
+        }   
     }
 
     return (
@@ -117,7 +135,6 @@ export default function NewTask() {
                     </Card>
                 </Modal.Body>
             </Modal>
-
         </section>
     )
 }
