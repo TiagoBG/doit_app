@@ -27,7 +27,7 @@ export default function NewTask() {
         const data = {
             taskname: taskData.taskname,
             urlimage: taskData.urlimage,
-            priority: taskData.priority,
+            priority: parseInt(taskData.priority),
             expdate: taskData.expdate,
             user: getFromLocal('id')
         }
@@ -48,10 +48,13 @@ export default function NewTask() {
                     icon: "success",
                     confirmButtonText: "Got It!",
                     confirmButtonColor: "#54e346"
-                  });                                      
+                  });
+                  clearFields();                                      
               }
-        })
+        });
+        
     }
+    
     const clearFields = () => {
         const taskName = document.querySelector('#taskname');
         const taskImage = document.querySelector('#urlimage');
@@ -96,9 +99,9 @@ export default function NewTask() {
                                         custom
                                     >
                                         <option value="0">Enter the priority</option>
-                                        <option value="1">High</option>
-                                        <option value="2">Mid</option>
-                                        <option value="3">Low</option>
+                                        <option value={1}>High</option>
+                                        <option value={2}>Mid</option>
+                                        <option value={3}>Low</option>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group className='mx-3'>

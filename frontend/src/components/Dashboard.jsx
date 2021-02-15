@@ -5,23 +5,36 @@ import { getFromLocal } from '../functions/localStorage';
 import api from '../api/axios';
 
 export default function Dashboard() {
-
+    const [taskData, setTaskData] = useState({});
     const user = getFromLocal("name");
     const id = getFromLocal("id");
-    const [taskData, setTaskData] = useState({});
     let todo;
 
     useEffect(() => {
         showTasks();
     },[]);
 
+    const prioritize = (item)=>{
+        if(item===1){
+            return "High"
+        }else if (item===2){
+            return "Mid"
+        }else{
+            return "Low"
+        }
+    }
+
+    const dateTime = (item)=>{
+        const date= item.split("T")
+        return date[0]
+    }
+
     const showTasks = ()=>{
         if (id) {
-            api.get(`/dashboard/${id}`, {
-                "user": id
-            }).then(
+            api.get(`/dashboard/${id}`).then(
                 (res)=> {
-                    todo = res;
+                    todo = res.data;
+                    console.log(todo);
                     setTaskData(todo);
                 }
             )
@@ -32,23 +45,27 @@ export default function Dashboard() {
 
     return (
         <section className='mx-auto mt-5 container-fluid col-11'>
-            <Button onClick={showTasks}>VER</Button>
             <Card style={{ backgroundColor: '#d1d8e0' }}>
                 <Card.Header style={{ backgroundColor: '#a5b1c2' }}>
                     <h3>Welcome back {user}! Let's catch up:</h3>
                 </Card.Header>
                 <div className="d-flex flex-wrap justify-content-center">
-                    <Card className='col-3 mx-3 my-5'>
-                        <Card.Header>
-
+                {taskData.map((task) => (    
+                    <Card className='col-3 mx-3 my-5' key={task._id}>
+                        <Card.Header className='col'>
+                            <div className="d-flex">
+                                {task.taskname}<br/>
+                                {prioritize(task.priority)}
+                            </div>                            
                         </Card.Header>
                         <Card.Body>
-                            TASK 1
+                            {task.urlimage}
                         </Card.Body>
                         <Card.Footer>
-
+                            {dateTime(task.expdate)}
                         </Card.Footer>
-                    </Card>                    
+                    </Card> 
+                ))};
                 </div>
             </Card>
         </section>

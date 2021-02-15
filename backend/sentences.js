@@ -51,6 +51,6 @@ db.tasks.find(
 
 //DELETE TASKS
 db.tasks.remove(
-    {name:"Prueba Técnica"},
+    {priority:"High"},
     {justOne:true}    
 );
