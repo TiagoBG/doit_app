@@ -66,7 +66,7 @@ router.get('/dashboard/:id', async(req, res)=>{
     const user = req.params.id
     const tasks = await Task.find(
         {user:user}
-    );
+    ).sort({priority:1});
     res.json(tasks);
 });
 
@@ -79,7 +79,7 @@ router.post('/dashboard', async(req, res)=>{
 });
 
 router.put('/dashboard/:id', async(req, res)=>{
-    const {name, email, priority, image, expdate, user} = req.body;
+    const {taskname, urlimage, priority, image, expdate, user} = req.body;
     const id = req.params.id;
 
     Task.findByIdAndUpdate(id, {
