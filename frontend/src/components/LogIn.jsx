@@ -86,7 +86,7 @@ const Login = () => (
                       if (res.data[0] === undefined) {                        
                         swal.fire({
                           title: "Incorrect info",
-                          text: "Data is not registered",
+                          text: "Data is not registered. Please Sign up.",
                           icon: "error",
                           confirmButtonText: "Got It!",
                           confirmButtonColor: "#f96332"
@@ -94,10 +94,10 @@ const Login = () => (
                         console.log(res.data);
                       } else {
                         console.log(res.data);
-                        const email = res.data[0]['email'];
+                        const id = res.data[0]['_id'];
                         const name = res.data[0]['name'];
                         saveToLocal('name', name)
-                        saveToLocal('email', email);
+                        saveToLocal('id', id);
                         window.location.href = "/dashboard";
                       }
                     });
