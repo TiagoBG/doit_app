@@ -15,10 +15,7 @@ const UserSchema = new Schema({
   },
   created_since: {
     type: Date, default: Date.now,
-  },
-  tasks:{
-    type: Schema.ObjectId, ref:""
   }
-  //OJOOOOOOOOOO PENDIENTE REVISARRRRR LA UNIOOOONNNNNNNNNNN
-})
+});
+
 module.exports = model('User', UserSchema);

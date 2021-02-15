@@ -17,21 +17,32 @@ db.users.remove(
     {justOne:true}    
 );
 
+
+
 //LOG IN
 
 
 //NEW TASK
 db.tasks.insert(
-    { task: 'Ejercicio',
-    assignee: 'Santiago Betancur Graciano',
-    priority: 'Mid',
-    image: 'doda.jpeg',
-    expdate: '15/02/2021'
+    { taskname: 'Reunión ',
+    priority: 'High',
+    urlimage: 'reu.jpeg',
+    expdate: '15/02/2021',
+    user: "6028566addc2dae124360c47"
 });
 
+db.tasks.insert(
+    { taskname: 'Lectura de libro',
+    priority: 'Low',
+    urlimage: 'book.jpeg',
+    expdate: '15/02/2021',
+    user:"6028566addc2dae124360c47"
+});
 
 //SHOW TASKS
-db.tasks.find().pretty()
+db.tasks.find(
+    { user:"6028566addc2dae124360c47"}
+);
 
 
 //EDIT TASK
@@ -39,3 +50,7 @@ db.tasks.find().pretty()
 
 
 //DELETE TASKS
+db.tasks.remove(
+    {name:"Prueba Técnica"},
+    {justOne:true}    
+);

@@ -1,14 +1,13 @@
-const mongoose = require("mongoose");
+const {model, Schema} = require("mongoose");
 
-const Task = mongoose.model(
-  "Task",
-  new mongoose.Schema({
-    name: {type: String, required: true},
-    email: {type: String, required: true},
-    priority: {type: String, required: true},
-    image: {type: String, required: true},
-    expdate: {type: Date, enum: ['High', 'Mid', 'Low'],required: true}    
-  })
-);
+const TaskSchema = new Schema({
 
-module.exports = Task;
+  taskname: {type: String, required: true},
+  urlimage: {type: String, required: true},
+  priority: {type: String, enum: ['High', 'Mid', 'Low'],required: true},
+  expdate: {type: Date, required: true},
+  user: {type: Schema.ObjectId, ref:"User"}
+
+});
+
+module.exports = model("Task", TaskSchema);
