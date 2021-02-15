@@ -14,6 +14,7 @@ export default function Dashboard() {
     const [taskData, setTaskData] = useState([]);
     const [show, setShow] = useState(false);
     const [taskId, setTaskId] = useState('');
+    const [modTask, setModTask] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = (e) => setShow(true);
@@ -37,8 +38,10 @@ export default function Dashboard() {
     }
 
     const dateTime = (item)=>{
-        const date= item.split("T")
+        if(item){
+            const date= item.split("T")
         return date[0]
+        }        
     }
 
     const showTasks = ()=>{
@@ -57,8 +60,8 @@ export default function Dashboard() {
     function insertTask(e) {
         let name = e.target.id;
         let value = e.target.value;
-        setTaskData((state) => ({
-        ...taskData,
+        setModTask((state) => ({
+        ...modTask,
         [name]: value,
         }));
     }
@@ -67,14 +70,14 @@ export default function Dashboard() {
         console.log(e.target)
         // saveToLocal('taskid', e.target.id)
         const data = {
-            taskname: taskData.taskname,
-            urlimage: taskData.urlimage,
-            priority: parseInt(taskData.priority),
-            expdate: taskData.expdate,
+            taskname: modTask.taskname,
+            urlimage: modTask.urlimage,
+            priority: parseInt(modTask.priority),
+            expdate: modTask.expdate,
             user: getFromLocal('id'),            
         }
         console.log(data);
-        api.put(`/dashboard/${taskId}`, data).then((res)=>{
+        api.post(`/dashboard/${taskId}`, data).then((res)=>{
             if (res.data.state ===0) {
                 swal.fire({
                   title: "Oops! Error: 500",
@@ -86,12 +89,14 @@ export default function Dashboard() {
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "New task successfully created!",
+                    title: "Task successfully updated!",
                     icon: "success",
                     confirmButtonText: "Got It!",
                     confirmButtonColor: "#54e346"
-                  });
-                  clearFields();                                      
+                  }).then((result) => {
+                    // Reload the Page
+                    window.location.reload();;
+                });                                          
               }
         });
         

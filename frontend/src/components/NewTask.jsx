@@ -15,12 +15,7 @@ export default function NewTask() {
     const handleShow = () => setShow(true);
 
     const id = getFromLocal("id");
-    let todo;
-
-    useEffect(() => {
-        showTasks();
-    },[]);
-
+    
     function insertTask(e) {
         let name = e.target.id;
         let value = e.target.value;
@@ -55,38 +50,14 @@ export default function NewTask() {
                     icon: "success",
                     confirmButtonText: "Got It!",
                     confirmButtonColor: "#54e346"
-                  });
-                  clearFields();
-                  showTasks();                                      
-              }
+                  }).then((result) => {
+                    // Reload the Page
+                    window.location.reload();;
+                });                                     
+            }
         });        
     }
     
-    const clearFields = () => {
-        const taskName = document.querySelector('#taskname');
-        const taskImage = document.querySelector('#urlimage');
-        const taskPrority = document.querySelector('#priority');
-        const taskExpdate = document.querySelector('#expdate');
-    
-        const userInputs = [taskName, taskImage, taskPrority, taskExpdate]
-    
-        for (const input of userInputs) {
-          input.value = ''
-        }    
-    }
-
-    const showTasks = ()=>{
-        if (id) {
-            api.get(`/dashboard/${id}`).then(
-                (res)=> {
-                    todo = res.data;
-                    console.log(todo);
-                    setTaskData(todo);
-                }
-            )
-        }   
-    }
-
     return (
         <section className='ml-5 mt-4 mr-3'>
             
