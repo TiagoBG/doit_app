@@ -1,11 +1,17 @@
 //SIGN UP
 db.users.insert(
     { name: 'Santiago',
-    surename: 'Betancur Graciano',
+    surname: 'Betancur Graciano',
     email: 'sbetagra13@gmail.com',
     password: 'SANtiago13'
 });
 
+db.users.insert(
+    { name: 'Jacobo',
+    surname: 'Garcés Oquendo',
+    email: 'jacobogo@gmail.com',
+    password: 'JAcobo1234'
+});
 
 //SHOW USERS
 db.users.find().pretty()
@@ -25,19 +31,30 @@ db.users.remove(
 //NEW TASK
 db.tasks.insert(
     { taskname: 'Reunión ',
-    priority: 'High',
+    priority: 1,
     urlimage: 'reu.jpeg',
     expdate: '15/02/2021',
-    user: "6028566addc2dae124360c47"
+    user: "602b480dba6be7b40cf07e05"
 });
 
 db.tasks.insert(
     { taskname: 'Lectura de libro',
-    priority: 'Low',
+    priority: 3,
     urlimage: 'book.jpeg',
     expdate: '15/02/2021',
-    user:"6028566addc2dae124360c47"
+    user:"602b480dba6be7b40cf07e05"
 });
+//local user id
+//6028566addc2dae124360c47
+
+db.tasks.insert(
+    { taskname: 'Prueba matemática',
+    priority: 2,
+    urlimage: 'math.jpeg',
+    expdate: '15/02/2021',
+    user:"602b4814ba6be7b40cf07e06"
+});
+
 
 //SHOW TASKS
 db.tasks.find(
@@ -55,4 +72,4 @@ db.tasks.remove(
     {justOne:true}    
 );
 
-db.tasks.remove({_id:ObjectId("602ae49fe79d7909e899f885")});
+db.tasks.remove({_id:ObjectId("602b4829ba6be7b40cf07e08")});
