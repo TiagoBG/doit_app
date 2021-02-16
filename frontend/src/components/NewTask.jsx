@@ -37,11 +37,11 @@ export default function NewTask() {
         api.post('/dashboard', data).then((res)=>{
             if (res.data.state ===0) {
                 swal.fire({
-                  title: "Oops! Error: 500",
-                  text: "Intente nuevamente o vuelva después",
-                  icon: "error",
-                  confirmButtonText: "¡Entendido!",
-                  confirmButtonColor: "#f96332"
+                    title: "Oops! 500 Error",
+                    text: "Please try again or come back later",
+                    icon: "error",
+                    confirmButtonText: "Got It!",
+                    confirmButtonColor: "#f96332"
                 });
                 console.log(res.data);
               }else{
@@ -57,7 +57,7 @@ export default function NewTask() {
             }
         });        
     }
-    
+
     return (
         <section className='ml-5 mt-4 mr-3'>
             

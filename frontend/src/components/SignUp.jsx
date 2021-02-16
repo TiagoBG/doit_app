@@ -29,18 +29,18 @@ export default function SignUp() {
         api.post('/signup', data).then((res)=>{
             if (res.data.state ===0) {
                 swal.fire({
-                  title: "Oops! Error: 500",
-                  text: "Intente nuevamente o vuelva después",
+                  title: "Oops! 500 Error",
+                  text: "Please try again or come back later",
                   icon: "error",
-                  confirmButtonText: "¡Entendido!",
+                  confirmButtonText: "Got It!",
                   confirmButtonColor: "#f96332"
                 });
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "Usuario creado correctamente",
+                    title: "User successfully created",
                     icon: "success",
-                    confirmButtonText: "¡Entendido!",
+                    confirmButtonText: "Got It!",
                     confirmButtonColor: "#54e346"
                   });
 
