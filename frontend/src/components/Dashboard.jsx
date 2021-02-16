@@ -15,6 +15,7 @@ export default function Dashboard() {
     const [show, setShow] = useState(false);
     const [taskId, setTaskId] = useState('');
     const [modTask, setModTask] = useState('');
+    const [expTask, setExpTask] = useState(0);
 
     const handleClose = () => setShow(false);
     const handleShow = (e) => setShow(true);
@@ -38,11 +39,54 @@ export default function Dashboard() {
     }
 
     const dateTime = (item)=>{
-        if(item){
-            const date= item.split("T")
-        return date[0]
+        if(item){            
+            const date= item.split("T");
+            return date[0]
         }        
     }
+
+    const expdateAlert=(item)=>{
+        const todayTime = new Date(Date.now());
+        const currentDate= todayTime.toISOString();
+        const today= currentDate.split("T");
+        const date= item.split("T");
+
+        console.log(today[0]);
+        console.log(item, currentDate)
+        const difference = new Date(date[0]) - new Date(today[0]);
+        console.log(difference);
+        
+        var unitmapping = {"days":24*60*60*1000,
+                   "hours":60*60*1000,
+                   "minutes":60*1000,
+                   "seconds":1000};
+
+            function floor(value)
+            {
+                return Math.floor(value)
+            }
+
+            function getHumanizedDiff(diff)
+            {
+                const result = floor(diff/unitmapping.days)
+                if (result ===0) {
+                    swal.fire({
+                        title: "Alert!",
+                        text: "You have tasks that expire today!",
+                        icon: "warning",
+                        confirmButtonText: "Got It!",
+                        confirmButtonColor: "#f96332"
+                    });
+                  }
+                return result;
+            }
+            const expTime=getHumanizedDiff(difference);
+
+            return expTime;
+    }
+
+
+    
 
     const showTasks = ()=>{
         if (id) {
@@ -150,15 +194,18 @@ export default function Dashboard() {
                 {taskData.map((task) => (    
                     <Card className='col-3 mx-3 my-5' key={task._id}>
                         <Card.Header className='w-100'>
-                            <div className="d-flex mt-3">
+                            <div className="mt-3">
                                <h4>{task.taskname}</h4>
-                                <h5 className='mt-1 ml-5'>{dateTime(task.expdate)}</h5>
+                                <h5 className='mt-1'>{dateTime(task.expdate)}</h5>
                             </div>                            
                         </Card.Header>
                         <Card.Body>
                             <div className="">                            
                             <h5>Priority: {prioritize(task.priority)}</h5>
                             {task.urlimage}
+                            </div>
+                            <div>
+                            <h6 className='text-danger mt-4'>The task will expire in: {expdateAlert(task.expdate)} days.</h6>
                             </div>
                         </Card.Body>
                         <div className='mx-auto my-4'>

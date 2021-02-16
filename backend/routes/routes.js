@@ -8,19 +8,6 @@ const {sendEmail} = require('./emailCredentials');
 const User = require('../models/User');
 const Task = require('../models/Task');
 
-/* //NODEMAILER CONFIG
-const smtpTransport = require('nodemailer-smtp-transport');
-const nodemailer = require('nodemailer');
-
-let transporter = nodemailer.createTransport({
-  service:'gmail',
-  host:'smtp.gmail.com',
-  auth:{
-      user: 'sbetagra13@gmail.com',
-      pass: ''
-  }
-});
- */
 // MONGOOSE CRUD    
 
 //USERS
