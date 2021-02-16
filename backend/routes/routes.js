@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 const router = Router();
 const connection = require('../config/db');
 const {sendEmail} = require('./emailCredentials');
+const {sendImg} = require('../routes/images');
 
 //models
 const User = require('../models/User');
@@ -56,6 +57,9 @@ router.get('/dashboard/:id', async(req, res)=>{
     ).sort({priority:1});
     res.json(tasks);
 });
+
+//INSERT IMAGE
+router.post('/dashboard/image',sendImg);
 
 router.post('/dashboard/:id', async(req, res)=>{
     const id = req.params.id
