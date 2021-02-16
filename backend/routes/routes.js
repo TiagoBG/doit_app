@@ -6,8 +6,8 @@ const {sendEmail} = require('./emailCredentials');
 const {sendImg} = require('../routes/images');
 
 //models
-const User = require('../models/User');
-const Task = require('../models/Task');
+const User = require('../models/user');
+const Task = require('../models/task');
 
 // MONGOOSE CRUD    
 

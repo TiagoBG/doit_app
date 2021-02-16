@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { db } = require('../models/User');
+const { db } = require('../models/user');
 
 mongoose.connect('mongodb://127.0.0.1/doit_db', {
     useNewUrlParser:true, 
