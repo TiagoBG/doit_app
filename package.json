@@ -1,0 +1,24 @@
+{
+  "name": "doit_app",
+  "version": "1.0.0",
+  "description": "Prueba técnica Backend para Academia Geek Feb 15 2021. Aplicación con MongoDB, Node.js, Jest y despliegue en GCP",
+  "main": "index.js",
+  "dependencies": {
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiagoBG/doit_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TiagoBG/doit_app/issues"
+  },
+  "homepage": "https://github.com/TiagoBG/doit_app#readme"
+}
