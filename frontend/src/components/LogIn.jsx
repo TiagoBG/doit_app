@@ -93,7 +93,7 @@ const Login = () => (
                         });
                         console.log(res.data);
                       } else {
-                        console.log(res.data);
+                        console.log(res);
                         const id = res.data[0]['_id'];
                         const name = res.data[0]['name'];
                         saveToLocal('name', name)
@@ -104,7 +104,7 @@ const Login = () => (
                 }else{
                   swal.fire({
                         title: "Incorrect info",
-                        text: "Please fill all the fields",
+                        text: "Please enter all the fields",
                         icon: "error",
                         confirmButtonText: "Got It!",
                         confirmButtonColor: "#f96332"
