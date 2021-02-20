@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
@@ -18,28 +17,16 @@ app.use(express.urlencoded({ extended: true }))
 //routes
 app.use('/', require('./routes/routes'));
 
-
-//JWT authentication
-app.get('/', (req, res) => {
-	res.json({
-		text: 'api jwt'
-	});
-});
-
 app.post('/', (req, res) => {
 	const { email,password } = req.body;
 	const user = {
 		email,
 		password
     };
-    
-	const token = jwt.sign({ user }, 'geek');
-	res.json({token});
 });
 
 
-app.get('/dashboard', verificarToken ,(req, res) => {
-	jwt.verify(req.token, 'geek', (err, data) => {
+/* app.get('/dashboard', (req, res) => {
 		if(err) {
 			res.sendStatus(403);
 		} else {
@@ -48,10 +35,10 @@ app.get('/dashboard', verificarToken ,(req, res) => {
 				data
 			});
 		}
-	});
-});
+	
+}); */
 
-function verificarToken(req, res, next) {
+/* function verificarToken(req, res, next) {
 	const bearerheader = req.headers["authorization"];
 	console.log(bearerheader)
 	if(typeof bearerheader !== 'undefined') {
@@ -62,7 +49,7 @@ function verificarToken(req, res, next) {
 	} else {
 		res.sendStatus(403);
 	}
-}
+} */
 //starting the server
 app.listen(app.get('port'),()=>{
     console.log(`Servidor conectado en el puerto ${app.get('port')}`);

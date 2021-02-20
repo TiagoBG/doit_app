@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
-const { db } = require('../models/user');
+// const { db } = require('../models/user');
+const dotenv = require('dotenv');
 
-mongoose.connect('mongodb://127.0.0.1/doit_db', {
+dotenv.config();
+
+mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser:true, 
-}).then(db=>console.log(`DB Connected :)`))
+}).then(console.log(`DB Connected :)`))
 .catch(error=>console.error(error));
