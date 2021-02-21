@@ -36,7 +36,7 @@ export default function NewTask() {
         const dataHeaders = getFromLocal('token');
 
         console.log(data);
-        api.post('/dashboard', {headers: dataHeaders, body: data}).then((res)=>{
+        api.post('/dashboard', {data, dataHeaders}).then((res)=>{
             if (res.data.state ===0) {
                 swal.fire({
                     title: "Oops! 500 Error",
