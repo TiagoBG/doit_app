@@ -133,10 +133,12 @@ export default function Dashboard() {
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "Task successfully updated!",
-                    icon: "success",
-                    confirmButtonText: "Got It!",
-                    confirmButtonColor: "#54e346"
+                    title: "Are you sure to update this task?",
+                    icon: "question",
+                    confirmButtonText: "Update",
+                    confirmButtonColor: "#54e346",
+                    focusConfirm: false,
+                    focusCancel: true
                   }).then((result) => {
                     // Reload the Page
                     window.location.reload();;
@@ -173,10 +175,13 @@ export default function Dashboard() {
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "Task successfully removed!",
-                    icon: "success",
-                    confirmButtonText: "Got It!",
-                    confirmButtonColor: "#54e346"
+                    title: "Are you sure to remove this task?",
+                    icon: "question",
+                    confirmButtonText: "Delete",
+                    confirmButtonColor: "#54e346",
+                    cancelButtonColor: "#999999",
+                    focusConfirm: false,
+                    focusCancel: true
                     }).then((result) => {
                         // Reload the Page
                         window.location.reload();;

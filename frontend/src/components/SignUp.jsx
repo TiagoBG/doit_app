@@ -26,8 +26,23 @@ export default function SignUp() {
             password: userData.password
         }
         console.log(data);
-        api.post('/signup', data).then((res)=>{
-            if (res.data.state ===0) {
+        swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#0052D9',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sign up!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            swal.fire(
+              'User Created!',
+              'New user signed up',
+              'success'
+            );
+            api.post('/signup', data).then((res)=>{          
+              if (res.data.state ===0) {
                 swal.fire({
                   title: "Oops! 500 Error",
                   text: "Please try again or come back later",
@@ -36,22 +51,16 @@ export default function SignUp() {
                   confirmButtonColor: "#f96332"
                 });
                 console.log(res.data);
-              }else{
-                swal.fire({
-                    title: "User successfully created",
-                    icon: "success",
-                    confirmButtonText: "Got It!",
-                    confirmButtonColor: "#54e346"
-                  });
-
-                  api.post('/send',data).then((res)=>{
-                    if(res.state === 0){
-                      alert('Cannot send the confirmation to the given email');
-                    }
-                    clearFields();
-                  });                       
+              }           
+            });
+            api.post('/send',data).then((res)=>{
+              if(res.state === 0){
+                alert('Cannot send the confirmation to the given email');
               }
-        })
+              clearFields();
+            });
+          }
+        });        
     }
 
     const clearFields = () => {
