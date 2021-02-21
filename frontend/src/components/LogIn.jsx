@@ -93,11 +93,21 @@ const Login = () => (
                         });
                         console.log(res.data);
                       } else {
-                        console.log(res);
-                        const id = res.data[0]['_id'];
-                        const name = res.data[0]['name'];
-                        saveToLocal('name', name)
+                        console.log(res.data);
+                        const token = res.data;
+                        const parseJwt = (token) => {
+                          try {
+                            return JSON.parse(atob(token.split('.')[1]));
+                          } catch (e) {
+                            return null;
+                          }
+                        };
+                        const id = parseJwt(token)._id;
+                        const username = parseJwt(token).name;
+                        console.log(id, username);                        
+                        saveToLocal('name', username)
                         saveToLocal('id', id);
+                        saveToLocal('token', token);
                         window.location.href = "/dashboard";
                       }
                     });

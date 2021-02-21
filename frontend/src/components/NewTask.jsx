@@ -33,8 +33,10 @@ export default function NewTask() {
             expdate: taskData.expdate,
             user: getFromLocal('id')
         }
+        const dataHeaders = getFromLocal('token');
+
         console.log(data);
-        api.post('/dashboard', data).then((res)=>{
+        api.post('/dashboard', {headers: dataHeaders, body: data}).then((res)=>{
             if (res.data.state ===0) {
                 swal.fire({
                     title: "Oops! 500 Error",
