@@ -22,6 +22,7 @@ export default function Dashboard() {
         
     const user = getFromLocal("name");
     const id = getFromLocal("id");
+    const token = getFromLocal("token");
     let todo;
 
     useEffect(() => {
@@ -83,14 +84,15 @@ export default function Dashboard() {
             const expTime=getHumanizedDiff(difference);
 
             return expTime;
-    }
-
-
-    
+    }    
 
     const showTasks = ()=>{
         if (id) {
-            api.get(`/dashboard/${id}`).then(
+            api.get(`/dashboard/${id}`,{
+                headers: {
+                  "auth-token": 'Bearer ' + token //the token is a variable which holds the token
+                }
+               } ).then(
                 (res)=> {
                     todo = res.data;
                     console.log(todo);
@@ -133,15 +135,23 @@ export default function Dashboard() {
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "Are you sure to update this task?",
-                    icon: "question",
-                    confirmButtonText: "Update",
-                    confirmButtonColor: "#54e346",
-                    focusConfirm: false,
-                    focusCancel: true
+                    title: 'Are you sure?',
+                    text: "This task will be updated",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0052D9',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Update'
                   }).then((result) => {
-                    // Reload the Page
-                    window.location.reload();;
+                    if (result.isConfirmed) {
+                      swal.fire({
+                        title: 'Task successfully updated!',
+                        icon: 'success'}
+                      ).then((result) => {
+                        // Reload the Page
+                        window.location.reload();;
+                      });
+                    }
                 });                                          
               }
         });
@@ -175,17 +185,24 @@ export default function Dashboard() {
                 console.log(res.data);
               }else{
                 swal.fire({
-                    title: "Are you sure to remove this task?",
-                    icon: "question",
-                    confirmButtonText: "Delete",
-                    confirmButtonColor: "#54e346",
-                    cancelButtonColor: "#999999",
-                    focusConfirm: false,
-                    focusCancel: true
-                    }).then((result) => {
+                    title: 'Are you sure?',
+                    text: "This task will be deleated",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0052D9',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Delete'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      swal.fire(
+                        {title: 'Task successfully deleated!',
+                        icon: 'success'}
+                      ).then((result) => {
                         // Reload the Page
                         window.location.reload();;
-              });              
+                      });
+                    }
+                });              
         }});        
     }
     // window. location. reload()
@@ -218,7 +235,7 @@ export default function Dashboard() {
                             <Button className='btn btn-danger mx-4' onClick={(e)=>{deleteTask(task._id); saveToLocal("task", task._id)}}><FontAwesomeIcon icon={faTrash} /></Button>
                         </div>
                     </Card> 
-                ))};
+                ))}
                 </div>
             </Card>
             <Modal show={show} onHide={handleClose}>

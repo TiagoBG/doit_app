@@ -36,28 +36,37 @@ export default function NewTask() {
         const dataHeaders = getFromLocal('token');
 
         console.log(data);
-        api.post('/dashboard', {data, dataHeaders}).then((res)=>{
-            if (res.data.state ===0) {
-                swal.fire({
-                    title: "Oops! 500 Error",
-                    text: "Please try again or come back later",
-                    icon: "error",
-                    confirmButtonText: "Got It!",
-                    confirmButtonColor: "#f96332"
+        swal.fire({
+            title: 'Are you sure?',
+            text: "This task will be created",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0052D9',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Create'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              swal.fire({
+                title: 'Task successfully created!',
+                icon: 'success'
+              }).then((result) => {
+                api.post('/dashboard', data).then((res)=>{
+                    if (res.data.state ===0) {
+                        swal.fire({
+                            title: "Oops! 500 Error",
+                            text: "Please try again or come back later",
+                            icon: "error",
+                            confirmButtonText: "Got It!",
+                            confirmButtonColor: "#f96332"
+                        });
+                        console.log(res.data);
+                      }
                 });
-                console.log(res.data);
-              }else{
-                swal.fire({
-                    title: "New task successfully created!",
-                    icon: "success",
-                    confirmButtonText: "Got It!",
-                    confirmButtonColor: "#54e346"
-                  }).then((result) => {
-                    // Reload the Page
-                    window.location.reload();;
-                });                                     
+                // Reload the Page
+                window.location.reload();;
+              });
             }
-        });        
+        });                
     }
 
     return (

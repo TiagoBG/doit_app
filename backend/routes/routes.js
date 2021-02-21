@@ -26,10 +26,10 @@ router.post('/', async(req, res)=>{
     if(error) return  res.status(400).send(error.details[0].message);
 
     //check if user does not exists
-    const user = await User.findOne({email: req.body.email})
+    const user = await User.findOne({email: email})
     if(!user) return res.status(400).send('Oops... User does not exists! Please signup');
     //check password
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
     if(!validPassword) return res.status(400).send('Oops... Invalid password');
 
     //get the user and assign a token
@@ -92,7 +92,7 @@ router.delete('/:id', async(req,res)=>{
 
 //TASKS
 //get the tasks with token validation
-router.get('/dashboard/:id',verify, async(req, res)=>{
+router.get('/dashboard/:id', async(req, res)=>{
     const user = req.params.id
     const tasks = await Task.find(
         {user:user}
@@ -101,19 +101,19 @@ router.get('/dashboard/:id',verify, async(req, res)=>{
 });
 
 //create a task
-router.post('/dashboard', verify, async(req, res)=>{
+router.post('/dashboard', async(req, res)=>{
     const {taskname, urlimage, priority, expdate, user} = req.body;
-    const newTask= new Task({taskname, urlimage, priority, expdate, user});
+    const newTask= await new Task({taskname, urlimage, priority, expdate, user});
 
     newTask.save();
     res.json({'message': 'New task has been added!'})
 });
 
 //insert image
-router.post('/dashboard/image',verify, sendImg);
+router.post('/dashboard/image', sendImg);
 
 //edit a task
-router.post('/dashboard/:id', verify, async(req, res)=>{
+router.post('/dashboard/:id', async(req, res)=>{
     const id = req.params.id
     const {taskname, urlimage, priority, expdate, user} = req.body;
        const task = await Task.findOneAndUpdate(
@@ -142,7 +142,7 @@ router.post('/dashboard/:id', verify, async(req, res)=>{
 }); */
 
 //delete a task
-router.delete('/dashboard/:id', verify, async(req,res)=>{
+router.delete('/dashboard/:id', async(req,res)=>{
     const id = req.params.id;
     const task = await Task.findByIdAndDelete(id);
     res.json({'message': 'The task has been deleted'})
