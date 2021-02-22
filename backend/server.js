@@ -17,6 +17,12 @@ app.use(express.urlencoded({ extended: true }))
 //routes
 app.use('/', require('./routes/routes'));
 
+app.get('/', (req,res)=>{
+	res.json({
+		status: 'Server running'
+	});
+});
+
 app.post('/', (req, res) => {
 	const { email,password } = req.body;
 	const user = {
